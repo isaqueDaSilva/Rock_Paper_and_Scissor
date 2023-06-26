@@ -18,30 +18,42 @@ struct GameSection: View {
 
 struct ContentView: View {
     
-    @State private var possibleMovements = "✊"
+    @State private var possibleMovementsOfPlayer: Moviments = .paper
+    @State private var possibleMovementsOfMachine: Moviments = .rock
 //    @State private var finalResultOfPlayer: PossibleResults = .win
 //    @State private var finalResultOfMachine: PossibleResults = .lose
     @State private var nameOfPlayer = ""
-    
-    var movements = ["✊", "🖐️", "✌️"]
     
     var possibleResult: PossibleResults {
         var result: PossibleResults = .win
         
         // chance to tie
-        if possibleMovements == "✊" && possibleMovements == "✊" {
+        if possibleMovementsOfPlayer == .rock && possibleMovementsOfMachine == .rock {
             result = .tie
-        } else if possibleMovements == "🖐️" && possibleMovements == "🖐️" {
+        } else if possibleMovementsOfPlayer == .paper && possibleMovementsOfMachine == .paper {
             result = .tie
-        } else if possibleMovements == "✌️" && possibleMovements == "✌️" {
+        } else if possibleMovementsOfPlayer == .scissor && possibleMovementsOfMachine == .scissor {
             result = .tie
         }
         
-        // chance to win
-        
-        if possibleMovements == "✊" && possibleMovements == "✌️" {
+        // chance to player win
+        if possibleMovementsOfPlayer == .rock && possibleMovementsOfMachine == .scissor {
+            result = .win
+        } else if possibleMovementsOfPlayer == .paper && possibleMovementsOfMachine == .rock {
+            result = .win
+        } else if possibleMovementsOfPlayer == .scissor && possibleMovementsOfMachine == .paper {
             result = .win
         }
+        
+        // chance to machine win
+        if possibleMovementsOfMachine == .rock && possibleMovementsOfPlayer == .scissor {
+            result = .win
+        } else if possibleMovementsOfMachine == .paper && possibleMovementsOfPlayer == .rock {
+            result = .win
+        } else if possibleMovementsOfMachine == .scissor && possibleMovementsOfPlayer == .paper {
+            result = .win
+        }
+        
         return result
     }
     
@@ -66,14 +78,17 @@ struct ContentView: View {
 }
 
 enum PossibleResults: String, CaseIterable {
-    case win, lose, tie
+    case win = "Win"
+    case lose = "Lose"
+    case tie = "Tie"
 }
 
-enum PossibleMoviments: String, CaseIterable {
+enum Moviments: String, CaseIterable {
     case rock = "✊"
     case paper = "🖐️"
     case scissor = "✌️"
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
