@@ -1,13 +1,13 @@
 //
-//  Rock__Paper_and_ScisorsUITestsLaunchTests.swift
-//  Rock, Paper and ScisorsUITests
+//  Rock__Paper_and_ScissorUITestsLaunchTests.swift
+//  Rock, Paper and ScissorUITests
 //
-//  Created by Isaque da Silva on 25/06/23.
+//  Created by Isaque da Silva on 26/06/23.
 //
 
 import XCTest
 
-final class Rock__Paper_and_ScisorsUITestsLaunchTests: XCTestCase {
+final class Rock__Paper_and_ScissorUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
