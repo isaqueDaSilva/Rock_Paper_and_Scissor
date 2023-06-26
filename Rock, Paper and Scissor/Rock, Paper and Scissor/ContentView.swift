@@ -19,6 +19,17 @@ struct ContentView: View {
     }
 }
 
+enum Movements: String, CaseIterable {
+    case rock = "Rock"
+    case paper = "Paper"
+    case scissor = "Scissor"
+}
+
+enum Results: String, CaseIterable {
+    case win = "Win"
+    case lose = "Lose"
+    case tie = "Tie"
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
