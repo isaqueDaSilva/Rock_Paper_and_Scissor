@@ -34,6 +34,12 @@ struct ContentView: View {
             result = .tie
         } else if possibleMovementsOfPlayer == .scissor && possibleMovementsOfMachine == .scissor {
             result = .tie
+        } else if possibleMovementsOfMachine == .rock && possibleMovementsOfPlayer == .rock {
+            result = .tie
+        } else if possibleMovementsOfMachine == .paper && possibleMovementsOfPlayer == .paper {
+            result = .tie
+        } else if possibleMovementsOfMachine == .scissor && possibleMovementsOfPlayer == .scissor {
+            result = .tie
         }
         
         // chance to player win
