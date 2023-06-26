@@ -54,6 +54,15 @@ struct ContentView: View {
             result = .win
         }
         
+        // chance to player lose
+        if possibleMovementsOfPlayer == .rock && possibleMovementsOfMachine == .paper {
+            result = .lose
+        } else if possibleMovementsOfPlayer == .paper && possibleMovementsOfMachine == .scissor {
+            result = .lose
+        } else if possibleMovementsOfPlayer == .scissor && possibleMovementsOfMachine == .rock {
+            result = .lose
+        }
+        
         return result
     }
     
