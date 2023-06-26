@@ -8,17 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var possibleMovements = ["✊", "🖐️", "✌️"]
+    @State private var finalResultOfPlayer: PossibleResults = .win
+    @State private var finalResultOfMachine: PossibleResults = .lose
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            VStack {
+                Text("Vs")
+                    .frame(maxWidth: .infinity)
+                    .font(.title.bold())
+                    .foregroundColor(.black)
+                    .background(Rectangle())
+                    .foregroundColor(.gray)
+            }
         }
-        .padding()
     }
 }
 
+enum PossibleResults: String, CaseIterable {
+    case win, lose
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
