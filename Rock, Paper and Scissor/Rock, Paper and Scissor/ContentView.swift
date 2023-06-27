@@ -29,6 +29,7 @@ struct ContentView: View {
     @State private var result: Results = .win
     @State private var playerScore = 0
     @State private var machineScore = 0
+    @State private var round = 1
     @State private var gameIsOn = false
     
     var body: some View {
@@ -84,16 +85,36 @@ struct ContentView: View {
                 }
                 Spacer()
             }
-        }.alert("Rock, Paper and Scissor", isPresented: $gameIsOn) {
-            Button("Continue") {
-                if result == .win {
-                    playerScore += 1
-                } else if result == .lose {
-                    machineScore += 1
+        }.alert("Round \(round) of Rock, Paper and Scissor", isPresented: $gameIsOn) {
+            if round < 10 {
+                Button("Continue") {
+                    if result == .win {
+                        playerScore += 1
+                        round += 1
+                    } else if result == .lose {
+                        machineScore += 1
+                        round += 1
+                    }
+                }
+            } else if round == 10 {
+                Button("New Game") {
+                    playerScore = 0
+                    machineScore = 0
+                    round = 1
                 }
             }
         } message: {
-            Text(result.rawValue)
+            if round < 10 {
+                if result == .win {
+                    Text("Congratulations player, you were smarter than the machine and scored 1 point 😉")
+                } else if result == .lose {
+                    Text("Who knows next time 😔\nThe machine was smarter than you and scored 1 point!")
+                } else if result == .tie {
+                    Text("What a dispute 🤯\nYou showed the same object and tied!")
+                }
+            } else if round == 10 {
+                Text(playerScore > machineScore ? "Congratulations, you won this match by \(playerScore) points against just \(machineScore) of the machine 😉" : "It wasn't this time 😔\nThe machine managed to beat you with \(machineScore) points, against just \(playerScore) points!")
+            }
         }
     }
     
