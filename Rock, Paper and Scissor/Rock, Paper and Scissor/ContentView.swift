@@ -94,10 +94,18 @@ struct ContentView: View {
                     } else if result == .lose {
                         machineScore += 1
                         round += 1
+                    } else if result == .tie {
+                        round += 1
                     }
                 }
             } else if round == 10 {
                 Button("New Game") {
+                    if result == .win {
+                        playerScore += 1
+                    } else if result == .lose {
+                        machineScore += 1
+                    }
+                    
                     playerScore = 0
                     machineScore = 0
                     round = 1
@@ -106,14 +114,20 @@ struct ContentView: View {
         } message: {
             if round < 10 {
                 if result == .win {
-                    Text("Congratulations player, you were smarter than the machine and scored 1 point 😉")
+                    Text("Congratulations player\nYou were smarter than the machine and scored 1 point 😉")
                 } else if result == .lose {
                     Text("Who knows next time 😔\nThe machine was smarter than you and scored 1 point!")
                 } else if result == .tie {
                     Text("What a dispute 🤯\nYou showed the same object and tied!")
                 }
             } else if round == 10 {
-                Text(playerScore > machineScore ? "Congratulations, you won this match by \(playerScore) points against just \(machineScore) of the machine 😉" : "It wasn't this time 😔\nThe machine managed to beat you with \(machineScore) points, against just \(playerScore) points!")
+                if playerScore > machineScore {
+                    Text("Congratulations, you won this match by \(playerScore) points against just \(machineScore) of the machine 😉")
+                } else if playerScore < machineScore {
+                    Text("It wasn't this time 😔\nThe machine managed to beat you with \(machineScore) points, against just \(playerScore) points!")
+                } else if playerScore == machineScore {
+                    Text("What a dispute 🤯\nYou guys are so great that you managed to keep the same final score!")
+                }
             }
         }
     }
