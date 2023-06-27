@@ -26,6 +26,7 @@ struct ViewOfPlayers: View {
 struct ContentView: View {
     @State private var possibleMovementsOfPlayer: Movements = .paper
     @State private var possibleMovimentsOfMachine: Movements = .rock
+    @State private var gameIsOn = false
     
     var result: Results {
         var result: Results = .win
@@ -57,19 +58,26 @@ struct ContentView: View {
             result = .lose
         }
         
-        // chance of machine win
-        
-        // chance of machine lose
-        
         return result
     }
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
+                Spacer()
                 VStack{
                     ViewOfPlayers(viewOfPlayer: possibleMovimentsOfMachine.rawValue)
                 }
+                Spacer()
+                Spacer()
+                Text("VS")
+                    .frame(maxWidth: .infinity)
+                    .font(.title.bold())
+                    .foregroundColor(.black)
+                    .background(Rectangle())
+                    .foregroundColor(.blue)
+                
+                Spacer()
                 Spacer()
                 VStack {
                     ViewOfPlayers(viewOfPlayer: possibleMovementsOfPlayer.rawValue)
@@ -80,6 +88,15 @@ struct ContentView: View {
                     }
                     .pickerStyle(.segmented)
                     .padding()
+                    Button("Start", action: {
+                        gameIsOn = true
+                    })
+                    .frame(width: 60, height: 35)
+                    .foregroundColor(.white)
+                    .bold()
+                    .background(Rectangle())
+                    .foregroundColor(.blue)
+                    .cornerRadius(10)
                 }
                 Spacer()
             }
