@@ -26,7 +26,6 @@ struct ViewOfPlayers: View {
 struct ContentView: View {
     @State private var possibleMovementsOfPlayer: Movements = .paper
     @State private var possibleMovimentsOfMachine: Movements = .rock
-    @State private var nameOfPlayer = ""
     
     var result: Results {
         var result: Results = .win
@@ -74,6 +73,13 @@ struct ContentView: View {
                 Spacer()
                 VStack {
                     ViewOfPlayers(viewOfPlayer: possibleMovementsOfPlayer.rawValue)
+                    Picker("Select your Moviment", selection: $possibleMovementsOfPlayer) {
+                        ForEach(Movements.allCases, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
                 }
                 Spacer()
             }
