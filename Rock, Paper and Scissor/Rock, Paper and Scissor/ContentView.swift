@@ -7,9 +7,26 @@
 
 import SwiftUI
 
+struct ViewOfPlayers: View {
+    var viewOfPlayer: String
+    
+    var body: some View{
+        VStack {
+            Text(viewOfPlayer)
+                .frame(width: 200, height: 200)
+                .font(.system(size: 150))
+                .background(Rectangle())
+                .cornerRadius(20)
+                .shadow(radius: 15)
+                .foregroundColor(.gray)
+        }
+    }
+}
+
 struct ContentView: View {
     @State private var possibleMovementsOfPlayer: Movements = .paper
     @State private var possibleMovimentsOfMachine: Movements = .rock
+    @State private var nameOfPlayer = ""
     
     var result: Results {
         var result: Results = .win
@@ -48,20 +65,26 @@ struct ContentView: View {
         return result
     }
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            VStack {
+                Spacer()
+                VStack{
+                    ViewOfPlayers(viewOfPlayer: possibleMovimentsOfMachine.rawValue)
+                }
+                Spacer()
+                VStack {
+                    ViewOfPlayers(viewOfPlayer: possibleMovementsOfPlayer.rawValue)
+                }
+                Spacer()
+            }
         }
-        .padding()
     }
 }
 
 enum Movements: String, CaseIterable {
-    case rock = "Rock"
-    case paper = "Paper"
-    case scissor = "Scissor"
+    case rock = "✊"
+    case paper = "🖐️"
+    case scissor = "✌️"
 }
 
 enum Results: String, CaseIterable {
@@ -69,6 +92,7 @@ enum Results: String, CaseIterable {
     case lose = "Lose"
     case tie = "Tie"
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
