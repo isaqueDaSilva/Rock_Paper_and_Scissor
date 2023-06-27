@@ -26,13 +26,12 @@ struct ViewOfPlayers: View {
 struct ContentView: View {
     @State private var possibleMovementsOfPlayer: Movements = .paper
     @State private var possibleMovimentsOfMachine: Movements = .rock
+    @State private var result: Results = .win
     @State private var playerScore = 0
     @State private var machineScore = 0
     @State private var gameIsOn = false
     
-    var result: Results {
-        var result: Results = .win
-        
+    func possibleResults() {
         // chance of tie
         if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .rock {
             result = .tie
@@ -59,31 +58,37 @@ struct ContentView: View {
         } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .rock {
             result = .lose
         }
-        
-        return result
     }
+    
     var body: some View {
         ZStack {
+            LinearGradient(stops: [
+                Gradient.Stop(color: .white, location: 0.35),
+                Gradient.Stop(color: .cyan, location: 0.65)
+            ], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+            
             VStack {
                 Spacer()
                 HStack{
                     Text("Player Score: \(playerScore)")
+                        .font(.title3.bold())
                     Spacer()
                     Text("Machine Score: \(machineScore)")
-                }.padding()
+                        .font(.title3.bold())
+                }
+                .padding()
                 Spacer()
+                
                 VStack{
                     ViewOfPlayers(viewOfPlayer: possibleMovimentsOfMachine.rawValue)
                 }
                 Spacer()
+                
                 Text("VS")
-                    .frame(maxWidth: .infinity)
                     .font(.title.bold())
                     .foregroundColor(.black)
-                    .background(Rectangle())
-                    .foregroundColor(.blue)
-                
                 Spacer()
+                
                 VStack {
                     ViewOfPlayers(viewOfPlayer: possibleMovementsOfPlayer.rawValue)
                     Picker("Select your Moviment", selection: $possibleMovementsOfPlayer) {
@@ -95,6 +100,7 @@ struct ContentView: View {
                     .padding()
                     Button("Start", action: {
                         gameIsOn = true
+                        possibleMovimentsOfMachine = Movements.allCases.randomElement() ?? .rock
                     })
                     .frame(width: 60, height: 35)
                     .foregroundColor(.white)
@@ -105,6 +111,16 @@ struct ContentView: View {
                 }
                 Spacer()
             }
+        }.alert("Rock, Paper and Scissor", isPresented: $gameIsOn) {
+            Button("Continue") {
+                if result == .win {
+                    playerScore += 1
+                } else if result == .lose {
+                    machineScore += 1
+                }
+            }
+        } message: {
+            Text(result.rawValue)
         }
     }
 }
