@@ -31,35 +31,6 @@ struct ContentView: View {
     @State private var machineScore = 0
     @State private var gameIsOn = false
     
-    func possibleResults() {
-        // chance of tie
-        if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .rock {
-            result = .tie
-        } else if possibleMovementsOfPlayer == .paper && possibleMovimentsOfMachine == .paper {
-            result = .tie
-        } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .scissor {
-            result = .tie
-        }
-        
-        // chance of player win
-        if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .scissor {
-            result = .win
-        } else if possibleMovementsOfPlayer == .paper && possibleMovimentsOfMachine == .rock {
-            result = .win
-        } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .paper {
-            result = .win
-        }
-        
-        // chance of player lose
-        if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .paper {
-            result = .lose
-        } else if possibleMovementsOfPlayer == .paper && possibleMovimentsOfMachine == .scissor {
-            result = .lose
-        } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .rock {
-            result = .lose
-        }
-    }
-    
     var body: some View {
         ZStack {
             LinearGradient(stops: [
@@ -101,6 +72,8 @@ struct ContentView: View {
                     Button("Start", action: {
                         gameIsOn = true
                         possibleMovimentsOfMachine = Movements.allCases.randomElement() ?? .rock
+                        possibleResults()
+                        
                     })
                     .frame(width: 60, height: 35)
                     .foregroundColor(.white)
@@ -121,6 +94,35 @@ struct ContentView: View {
             }
         } message: {
             Text(result.rawValue)
+        }
+    }
+    
+    func possibleResults() {
+        // chance of tie
+        if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .rock {
+            result = .tie
+        } else if possibleMovementsOfPlayer == .paper && possibleMovimentsOfMachine == .paper {
+            result = .tie
+        } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .scissor {
+            result = .tie
+        }
+
+        // chance of player win
+        if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .scissor {
+            result = .win
+        } else if possibleMovementsOfPlayer == .paper && possibleMovimentsOfMachine == .rock {
+            result = .win
+        } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .paper {
+            result = .win
+        }
+
+        // chance of player lose
+        if possibleMovementsOfPlayer == .rock && possibleMovimentsOfMachine == .paper {
+            result = .lose
+        } else if possibleMovementsOfPlayer == .paper && possibleMovimentsOfMachine == .scissor {
+            result = .lose
+        } else if possibleMovementsOfPlayer == .scissor && possibleMovimentsOfMachine == .rock {
+            result = .lose
         }
     }
 }
