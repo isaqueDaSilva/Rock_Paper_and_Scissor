@@ -26,6 +26,8 @@ struct ViewOfPlayers: View {
 struct ContentView: View {
     @State private var possibleMovementsOfPlayer: Movements = .paper
     @State private var possibleMovimentsOfMachine: Movements = .rock
+    @State private var playerScore = 0
+    @State private var machineScore = 0
     @State private var gameIsOn = false
     
     var result: Results {
@@ -64,11 +66,15 @@ struct ContentView: View {
         ZStack {
             VStack {
                 Spacer()
+                HStack{
+                    Text("Player Score: \(playerScore)")
+                    Spacer()
+                    Text("Machine Score: \(machineScore)")
+                }.padding()
                 Spacer()
                 VStack{
                     ViewOfPlayers(viewOfPlayer: possibleMovimentsOfMachine.rawValue)
                 }
-                Spacer()
                 Spacer()
                 Text("VS")
                     .frame(maxWidth: .infinity)
@@ -77,7 +83,6 @@ struct ContentView: View {
                     .background(Rectangle())
                     .foregroundColor(.blue)
                 
-                Spacer()
                 Spacer()
                 VStack {
                     ViewOfPlayers(viewOfPlayer: possibleMovementsOfPlayer.rawValue)
